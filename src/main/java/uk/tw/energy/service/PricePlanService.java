@@ -36,11 +36,11 @@ public class PricePlanService {
     }
 
     private BigDecimal calculateCost(List<ElectricityReading> electricityReadings, PricePlan pricePlan) {
-        BigDecimal average = calculateAverageReading(electricityReadings);
+        BigDecimal averageReading = calculateAverageReading(electricityReadings);
         BigDecimal timeElapsed = calculateTimeElapsed(electricityReadings);
 
-        BigDecimal averagedCost = average.divide(timeElapsed, RoundingMode.HALF_UP);
-        return averagedCost.multiply(pricePlan.getUnitRate());
+        BigDecimal electricityConsumption = averageReading.multiply(timeElapsed);
+        return electricityConsumption.multiply(pricePlan.getUnitRate());
     }
 
     private BigDecimal calculateAverageReading(List<ElectricityReading> electricityReadings) {
